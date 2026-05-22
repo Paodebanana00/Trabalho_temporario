@@ -1,21 +1,17 @@
-/**
- * SCRIPT ANTI-DEVTOOLS EXTENDED (VERSÃO AGRESSIVA)
- * Apenas para fins de estudo ou zoeira controlada.
- */
-
-// 1. Bloqueia o clique com o botão direito do mouse
+// Bloquear botão direito
 document.addEventListener("contextmenu", e => e.preventDefault());
 
-// 2. Lista de atalhos de inspeção e salvamento totalmente bloqueados
+// Lista de combinações proibidas
 const blockedCombos = [
-    { ctrl: true, shift: true, key: "I" }, // Inspecionar (Chrome/Edge)
-    { ctrl: true, shift: true, key: "J" }, // Console
-    { ctrl: true, shift: true, key: "C" }, // Selecionar elemento
-    { ctrl: true, key: "U" },             // Código-fonte da página
-    { ctrl: true, key: "S" },             // Salvar a página no PC
-    { ctrl: true, key: "P" }              // Imprimir a página (gerar PDF do layout)
+    { ctrl: true, shift: true, key: "I" },
+    { ctrl: true, shift: true, key: "J" },
+    { ctrl: true, shift: true, key: "C" },
+    { ctrl: true, key: "U" },
+    { ctrl: true, key: "S" },
+    { ctrl: true, key: "P" }
 ];
 
+// Função para checar combinações
 function isBlocked(e) {
     return (
         e.key === "F12" ||
@@ -27,7 +23,7 @@ function isBlocked(e) {
     );
 }
 
-// Bloqueia os eventos de teclado instantaneamente
+// Bloquear eventos-chave
 ["keydown", "keypress", "keyup"].forEach(evt => {
     document.addEventListener(evt, function(e) {
         if (isBlocked(e)) {
@@ -38,55 +34,35 @@ function isBlocked(e) {
     });
 });
 
-// 3. Destruição total da sessão (O Ataque)
-function quebrarNavegador() {
-    // Tenta fechar a aba
-    window.close(); 
-    // Redireciona para o nada
-    window.location.href = "about:blank"; 
-    // Limpa a tela se o redirecionamento demorar
-    document.body.innerHTML = "<h1 style='color:white; text-align:center; margin-top:20vh;'>Acesso Bloqueado.</h1>"; 
-    
-    // Força o congelamento da aba criando um loop infinito de processamento
-    setTimeout(() => {
-        while (true) {
-            console.log("Crash!");
-        }
-    }, 50);
+// Função para fechar / neutralizar a página
+function matarPagina() {
+    window.close(); // tentativa 1
+    window.location.href = "about:blank"; // tentativa 2
+    document.body.innerHTML = ""; // fallback
 }
 
-// 4. O Coração da Maldade: Loop de Debugger e Verificação de tamanho
-// Se o DevTools abrir, o 'debugger' congela a aba de inspeção na hora
-const antiDevTools = () => {
-    const limite = 160;
-    
-    // Testa se o console foi aberto medindo o tamanho útil da tela
+// Detecta DevTools pela diferença de tamanho da janela
+function detectarDevToolsLayout() {
+    const limite = 150;
     if (
         window.outerWidth - window.innerWidth > limite ||
         window.outerHeight - window.innerHeight > limite
     ) {
-        quebrarNavegador();
+        matarPagina();
     }
-    
-    // Executa o debugger. Se o console estiver aberto, ele para a execução aqui
-    (function () {
-        (function a() {
-            try {
-                (function b(i) {
-                    if (("" + i / i).length !== 1 || i % 20 === 0) {
-                        (function () { }).constructor("debugger")();
-                    } else {
-                        (function () { }).constructor("debugger")();
-                    }
-                    b(++i);
-                })(0);
-            } catch (e) {
-                // Se o cara tentar desativar o debugger na marra, o script detecta e mata a página
-                setTimeout(antiDevTools, 50);
-            }
-        })();
-    })();
-};
+}
 
-// Inicializa a marcação cerrada
-setInterval(antiDevTools, 100);
+// Método **imediato** — detecta DevTools aberto ANTES do carregamento
+(function detectarDevToolsInit() {
+    const limite = 150;
+
+    if (
+        window.outerWidth - window.innerWidth > limite ||
+        window.outerHeight - window.innerHeight > limite
+    ) {
+        matarPagina();
+    }
+})();
+
+// Verifica continuamente (caso abra depois)
+setInterval(detectarDevToolsLayout, 200);
