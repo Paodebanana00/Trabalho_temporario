@@ -1,0 +1,67 @@
+.icon-flutuar {
+  transform: translateY(0px);
+  animation: float 5s ease-in-out infinite;
+
+}
+
+.meta-flutuar{
+  transform: translateY(0px);
+  animation: float 5s ease-in-out infinite;
+
+}
+
+.nave-flutuar {
+  width: 400px;
+  transform: translateY(0px);
+  animation: junin 5s ease-in-out infinite;
+}
+
+@keyframes junin{
+  0%{
+    transform: translate(0px);
+  }
+  50%{
+    transform: translate(-30px);
+  }
+  100%{
+    transform: translate(0px);
+  }
+  }
+
+@keyframes floaa{
+  0%{
+    transform: translate(0px);
+  }
+  50%{
+    transform: translate(-30px);
+  }
+  100%{
+    transform: translate(0px);
+  }
+  }
+@keyframes float{
+0%{
+  transform: translate(0px);
+}
+50%{
+  transform: translate(-30px);
+}
+100%{
+  transform: translate(0px);
+}
+}
+
+/*certificado*/
+
+.container img {
+  height: 300px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
+/*nave*/
+
+

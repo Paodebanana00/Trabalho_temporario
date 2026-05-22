@@ -1,0 +1,33 @@
+#bg-imagem {
+    position: fixed; 
+    bottom: -150px; /* Joga metade da imagem para baixo da tela */
+    right: -150px;  /* Joga metade da imagem para fora da tela na direita */
+    width: 300px;   /* Mesma largura definida no background-size */
+    height: 300px;  /* Mesma altura para formar um quadrado perfeito */
+    z-index: -1;
+    pointer-events: none; 
+    opacity: 0.5;
+    
+    /* Configurações da imagem */
+    background-image: url("../img/png-transparent-circle-skyline-drawing-circle.png"); 
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain; /* Garante que a imagem preencha o quadrado */
+    
+    /* Ativa a animação: nome, tempo (15s), linear (sem solavancos), infinite (para sempre) */
+    animation: girarPlaneta 15s linear infinite; 
+}
+
+/* Cria a lógica do giro infinito de 0 a 360 graus */
+@keyframes girarPlaneta {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.flex-container {
+    display: none;
+}
